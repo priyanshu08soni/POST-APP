@@ -49,12 +49,11 @@ const Home = (props) => {
     setArticles(articles.concat(parsedData.articles));
     setTotalResults(parsedData.totalResults);
   };
-  console.log(props.pageSize);
   return (
     <>
       <div>
         <div className="gap-6 p-10 font-roboto" style={{ display: "flex" }}>
-          <div className="w-50">
+          <div style={{width:"55%"}}>
             <h1
               className="text-center text-white py-4"
               style={{ margin: "75px 0px 0px 0px" }}
@@ -71,15 +70,12 @@ const Home = (props) => {
               <div className="container ms-2">
                 <div className="row">
                   {articles &&
-                    articles?.map((element) => {
+                    articles?.map((element,index) => {
                       return (
                         <div
                           className="my-3"
                           style={{ height: "200px" }}
-                          key={element.url}
-                          onClick={() => {
-                            setBlogData(element);
-                          }}
+                          key={index}
                         >
                           <NewsItem
                             title={element.title ? element.title : ""}
@@ -91,6 +87,7 @@ const Home = (props) => {
                             author={element.author}
                             date={element.publishedAt}
                             source={element.source.name}
+                            setBlogData={setBlogData}
                           />
                         </div>
                       );
@@ -100,28 +97,29 @@ const Home = (props) => {
             </InfiniteScroll>
           </div>
           <div
-            className="grid w-50 custom-scrollbar"
+            className="grid custom-scrollbar"
             style={{
               position: "fixed",
               right: "5px",
-              overflow:"scroll",
+              overflow: "scroll",
               top: "80px",
+              width:"42%",
               bottom: "80px",
-              marginRight:"10px",
-              paddingBottom:"10px",
+              marginRight: "10px",
+              paddingBottom: "10px",
               borderRadius: "50px",
-              backgroundImage:"radial-gradient(green -72%, skyblue 94%)"
+              backgroundImage: "radial-gradient(green -72%, skyblue 94%)",
             }}
           >
             <div>
               <img
                 className="img-fluid p-5"
-                src={blogData ? blogData.urlToImage : image}
-                style={{borderRadius:"100px"}}
+                src={blogData ? blogData?.imageUrl : image}
+                style={{ borderRadius: "100px" }}
                 alt=""
               />
             </div>
-            <div className="ps-5 pt-4">
+            <div className="px-5 pt-4">
               <span
                 className="badge rounded-pill bg-danger"
                 style={{ marginTop: "5px", marginRight: "5px" }}
@@ -131,19 +129,27 @@ const Home = (props) => {
               <p className="card-text">
                 <small className="text-muted">
                   By {blogData?.author ? blogData?.author : "Unknown"} on{" "}
-                  {new Date(blogData?.publishedAt).toGMTString()}
+                  {new Date(blogData?.date).toGMTString()}
                 </small>
               </p>
               <b className="card-title">
                 {blogData
-                  ? blogData.title
+                  ? blogData?.title
                   : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, blanditiis."}
               </b>
               <p className="card-description custom-scrollbar">
                 {blogData
-                  ? blogData.description
+                  ? blogData?.description
                   : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, blanditiis."}
               </p>
+              <a
+                rel="noreferrer"
+                href={blogData?.newsUrl}
+                target="_blank"
+                className="btn btn-dark"
+              >
+                Read more
+              </a>
             </div>
           </div>
         </div>
@@ -158,7 +164,7 @@ Home.defaultProps = {
 };
 Home.propTypes = {
   country: PropTypes.string,
-  pageSize: PropTypes,
+  pageSize: PropTypes.number,
   category: PropTypes.string,
 };
 export default Home;

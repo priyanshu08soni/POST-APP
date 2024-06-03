@@ -1,7 +1,7 @@
 import React from "react";
 import image from "../assets/background.png";
 const NewsItem = (props) => {
-  let { title, description, imageUrl, newsUrl, author, date, source } = props;
+  let { title,description,newsUrl,setBlogData, imageUrl, author, date, source } = props;
   return (
     <>
       <div>
@@ -31,22 +31,24 @@ const NewsItem = (props) => {
             alt="..."
           />
           <div className="card-body">
+            <div>
             <p className="card-title">{title} </p>
-            <p className="card-text">{description.substr(0, 70) + "..."}</p>
             <p className="card-text">
               <small className="text-muted">
                 By {author ? author : "Unknown"} on{" "}
                 {new Date(date).toGMTString()}
               </small>
             </p>
-            <a
+            </div>
+            <button
               rel="noreferrer"
-              href={newsUrl}
+              onClick={()=>setBlogData({ title ,description,newsUrl,setBlogData, imageUrl, author, date, source })}
               target="_blank"
-              className="btn btn-dark"
+              className="btn"
+              style={{backgroundImage:"linear-gradient(green -12%, skyblue 102%)"}}
             >
-              Read more
-            </a>
+              Details
+            </button>
           </div>
         </div>
       </div>

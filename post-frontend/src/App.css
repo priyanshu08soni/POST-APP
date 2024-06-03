@@ -12,6 +12,11 @@
 .custom-scrollbar-dark::-webkit-scrollbar-thumb{
   background-color: #312e81;
 }
+.card-body{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column
+}
 :root{
   --color-131921: #9091a7;
   --color-3b4149: #3b4149;
@@ -139,9 +144,6 @@ a{
 
 footer{
   background-color: transparent;
-}
-footer:not(:first-child){
-  border-top: 1px solid rgba(255,255,255,0.1);
 }
 footer .input-group-text{
   background-color: var(--color-232f3e);
